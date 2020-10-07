@@ -1,0 +1,83 @@
+<div class="body">
+    <div class="container">
+      <div class="row">
+        <div class="col-xs-3">
+          <h2>User info</h2>
+           <%= attachment_image_tag @user, :profile_image, :fill, 100, 100, format: "jpg", class: "profile_image", fallback:"default_icon.jpg" %>
+            <table class="table">
+             <tbody>
+              <tr>
+                <th>name</th>
+                <th><%= @user.name %></th>
+              </tr>
+              <tr>
+                <th>introduction</th>
+                <th><%= @user.introduction %></th>
+              </tr>
+             </tbody>
+            </table>
+
+          <div class="btn-group" role="group">
+            <button type="button" class="btn btn-default">
+            	<%= link_to "edit",edit_user_path(@user) %> 
+              </button>
+          </div>
+
+          <h2>New book</h2>
+            <%= form_for(@post_book, url: books_path) do |f| %>
+              <% if @post_book.errors.any? %>
+                <div id="error_explanation">
+                  <h2><%= @post_book.errors.count %>件のエラーが発生しました。</h2>
+                   <ul>
+                     <% @post_book.errors.full_messages.each do |message| %>
+                      <li><%= message %></li>
+                     <%end%>
+                   </ul>
+                </div>
+              <% end %>
+               <div class="row">
+                 <label>title</label>
+                 <br>
+                 <%= f.text_field :title %>
+               </div>
+               <div class="row">
+                 <label>opinion</label>
+                 <br>
+                 <%= f.text_field :body %>
+                 <%=f.submit "Create Book", class:"btn btn-lg btn-block btn-base-1 mt-20" %>
+               </div>
+            <%end%>
+        </div>
+
+ 		<div class="col-xs-9">
+	  <h1>Users</h1>
+		
+       		<table class="table">
+            <thead>
+              <tr>
+                <th>image</th>
+                <th>name</th>
+                <th colspan="3"></th>
+              </tr>
+            </thead>
+            <% @users.each do |user| %>
+           		<tbody>
+           	 	  <tr>
+               		<td>
+                 		<%= image_tag attachment_url(user, :profile_image, :fill, 30, 30, format: "jpg", fallback:"default_icon.jpg") %>
+               		</td>
+               		<td>
+                 		<%= user.name %>
+              		</td>
+               		<td>
+               			<%= link_to "Show", user_path(user) %>
+               		</td>
+             	  </tr>
+            	</tbody>
+              <%end%>
+        	</table>
+    	
+		</div>
+	  </div>
+	</div>
+</div>
